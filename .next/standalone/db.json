@@ -1,0 +1,33 @@
+{
+  "tenants": [
+    {
+      "id": "1752469607157",
+      "name": "Test",
+      "flatId": "",
+      "monthlyPayHistory": [],
+      "notes": [],
+      "rentAgreements": []
+    }
+  ],
+  "flats": [],
+  "expenses": [
+    {
+      "id": "1752553787987",
+      "description": "Test",
+      "amountHistory": [
+        {
+          "id": "1752553787987",
+          "amount": 222,
+          "startDate": "2025-07-15T04:29:47.987Z"
+        }
+      ],
+      "recurring": "one_time",
+      "recurringDate": null,
+      "paymentMethod": "333",
+      "supplierId": "",
+      "customFields": {}
+    }
+  ],
+  "suppliers": [],
+  "tenantFields": []
+}

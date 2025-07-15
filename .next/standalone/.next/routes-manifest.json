@@ -1,0 +1,318 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/admin/fields/expenses/[id]",
+      "regex": "^/api/admin/fields/expenses/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/fields/expenses/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/admin/fields/suppliers/[id]",
+      "regex": "^/api/admin/fields/suppliers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/fields/suppliers/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/admin/fields/[id]",
+      "regex": "^/api/admin/fields/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/fields/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/expenses/[id]",
+      "regex": "^/api/expenses/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/expenses/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/expenses/[id]/amount-history",
+      "regex": "^/api/expenses/([^/]+?)/amount\\-history(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/expenses/(?<nxtPid>[^/]+?)/amount\\-history(?:/)?$"
+    },
+    {
+      "page": "/api/flats/[id]",
+      "regex": "^/api/flats/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/flats/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]",
+      "regex": "^/api/suppliers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/communication-channels",
+      "regex": "^/api/suppliers/([^/]+?)/communication\\-channels(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/communication\\-channels(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/communication-channels/[channelId]",
+      "regex": "^/api/suppliers/([^/]+?)/communication\\-channels/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPchannelId": "nxtPchannelId"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/communication\\-channels/(?<nxtPchannelId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/contacts",
+      "regex": "^/api/suppliers/([^/]+?)/contacts(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/contacts(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/contacts/[contactId]",
+      "regex": "^/api/suppliers/([^/]+?)/contacts/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPcontactId": "nxtPcontactId"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/contacts/(?<nxtPcontactId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/notes",
+      "regex": "^/api/suppliers/([^/]+?)/notes(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/notes(?:/)?$"
+    },
+    {
+      "page": "/api/suppliers/[id]/notes/[noteId]",
+      "regex": "^/api/suppliers/([^/]+?)/notes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPnoteId": "nxtPnoteId"
+      },
+      "namedRegex": "^/api/suppliers/(?<nxtPid>[^/]+?)/notes/(?<nxtPnoteId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]",
+      "regex": "^/api/tenants/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/monthly-pay-history",
+      "regex": "^/api/tenants/([^/]+?)/monthly\\-pay\\-history(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/monthly\\-pay\\-history(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/monthly-pay-history/[entryId]",
+      "regex": "^/api/tenants/([^/]+?)/monthly\\-pay\\-history/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPentryId": "nxtPentryId"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/monthly\\-pay\\-history/(?<nxtPentryId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/notes",
+      "regex": "^/api/tenants/([^/]+?)/notes(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/notes(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/notes/[noteId]",
+      "regex": "^/api/tenants/([^/]+?)/notes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPnoteId": "nxtPnoteId"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/notes/(?<nxtPnoteId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/rent-agreements",
+      "regex": "^/api/tenants/([^/]+?)/rent\\-agreements(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/rent\\-agreements(?:/)?$"
+    },
+    {
+      "page": "/api/tenants/[id]/rent-agreements/[agreementId]",
+      "regex": "^/api/tenants/([^/]+?)/rent\\-agreements/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid",
+        "nxtPagreementId": "nxtPagreementId"
+      },
+      "namedRegex": "^/api/tenants/(?<nxtPid>[^/]+?)/rent\\-agreements/(?<nxtPagreementId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/expenses/[id]/edit",
+      "regex": "^/expenses/([^/]+?)/edit(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/expenses/(?<nxtPid>[^/]+?)/edit(?:/)?$"
+    },
+    {
+      "page": "/flats/[id]",
+      "regex": "^/flats/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/flats/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/suppliers/[id]",
+      "regex": "^/suppliers/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/suppliers/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/suppliers/[id]/edit",
+      "regex": "^/suppliers/([^/]+?)/edit(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/suppliers/(?<nxtPid>[^/]+?)/edit(?:/)?$"
+    },
+    {
+      "page": "/tenants/[id]",
+      "regex": "^/tenants/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/tenants/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/tenants/[id]/edit",
+      "regex": "^/tenants/([^/]+?)/edit(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/tenants/(?<nxtPid>[^/]+?)/edit(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/expenses",
+      "regex": "^/expenses(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/expenses(?:/)?$"
+    },
+    {
+      "page": "/expenses/new",
+      "regex": "^/expenses/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/expenses/new(?:/)?$"
+    },
+    {
+      "page": "/flats",
+      "regex": "^/flats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/flats(?:/)?$"
+    },
+    {
+      "page": "/flats/new",
+      "regex": "^/flats/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/flats/new(?:/)?$"
+    },
+    {
+      "page": "/suppliers",
+      "regex": "^/suppliers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/suppliers(?:/)?$"
+    },
+    {
+      "page": "/suppliers/new",
+      "regex": "^/suppliers/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/suppliers/new(?:/)?$"
+    },
+    {
+      "page": "/tenants",
+      "regex": "^/tenants(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tenants(?:/)?$"
+    },
+    {
+      "page": "/tenants/new",
+      "regex": "^/tenants/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tenants/new(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  },
+  "rewrites": []
+}
