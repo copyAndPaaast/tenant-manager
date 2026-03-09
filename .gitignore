@@ -1,37 +1,23 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Next.js (old stack, no longer used)
+.next/
 
-# testing
-/coverage
+# Database (contains real tenant/financial data — never commit)
+database.sqlite
+database.sqlite-wal
+database.sqlite-shm
 
-# next.js
-/.next/
-/out/
+# Uploaded files (user data)
+uploads/
 
-# production
-/build
-
-# misc
+# OS
 .DS_Store
-*.pem
 
-# debug
+# Local planning and AI assistant files
+PLANNING.md
+.claude
+
+# Logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-.next
