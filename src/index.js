@@ -29,6 +29,7 @@ app.use('/api/expense_history', require('./api/expense_history'));
 app.use('/api/expense_categories', require('./api/expense_categories'));
 app.use('/api/settlements', require('./api/settlements'));
 app.use('/api/files', require('./api/files'));
+app.use('/api/database', require('./api/database'));
 app.use('/api/settings', require('./api/settings'));
 
 // Serve uploaded files

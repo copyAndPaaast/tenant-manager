@@ -77,6 +77,15 @@ export default class FlatForm extends Component {
                 new FileAttachments('flat', this.flatId).mount(fileContainer);
             }
 
+            document.getElementById('deleteFlatBtn')?.addEventListener('click', async () => {
+                if(!confirm(this.t('are_you_sure'))) return;
+                try {
+                    const res = await fetch(`/api/flats/${this.flatId}`, { method: 'DELETE' });
+                    if (!res.ok) throw new Error('Error deleting element');
+                    window.location.href = '/flats';
+                } catch (e) { alert(e.message); }
+            });
+
             return;
         }
 
@@ -313,7 +322,7 @@ export default class FlatForm extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            ${this.state.leases.map(l => {
+                            ${this.state.leases.map((l, index) => {
             const isEditing = this.state.editingLeaseId == l.id;
             if (isEditing) {
                 return `
@@ -335,8 +344,8 @@ export default class FlatForm extends Component {
             return `
                                 <tr>
                                     <td><strong>${this.state.tenantsMap[l.tenant_id] || this.t('unknown')}</strong></td>
-                                    <td>${l.move_in_date || '-'}</td>
-                                    <td>${l.move_out_date ? `<span style="color: var(--text-secondary);">${l.move_out_date}</span>` : `<span style="color: var(--success-color); font-weight: 600;">${this.t('current')}</span>`}</td>
+                                    <td>${l.move_in_date ? this.fDate(l.move_in_date) : '-'}</td>
+                                    <td>${l.move_out_date ? `<span style="color: var(--text-secondary);">${this.fDate(l.move_out_date)}</span>` : (index === 0 ? `<span style="color: var(--success-color); font-weight: 600;">${this.t('current')}</span>` : '-')}</td>
                                     <td style="text-align: right; white-space: nowrap;">
                                         <button class="btn btn-sm btn-action edit-lease-btn" data-id="${l.id}" style="margin-right: 4px;">${this.t('edit')}</button>
                                         <button class="btn btn-sm btn-danger delete-lease-btn" data-id="${l.id}">${this.t('delete')}</button>
@@ -405,7 +414,7 @@ export default class FlatForm extends Component {
             }
             return `
                                 <tr>
-                                    <td style="white-space: nowrap; vertical-align: top;">${p.date}</td>
+                                    <td style="white-space: nowrap; vertical-align: top;">${this.fDate(p.date)}</td>
                                     <td>${p.information}</td>
                                     <td style="text-align: right; vertical-align: top; white-space: nowrap;">
                                          <button class="btn btn-sm btn-action edit-protocol-btn" data-id="${p.id}" style="margin-right: 4px;">${this.t('edit')}</button>
@@ -481,12 +490,17 @@ export default class FlatForm extends Component {
                             
                             ${this.isEdit ? `<div id="flat-file-attachments"></div>` : ''}
 
-                            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; align-items: center;">
-                                ${this.state.saved ? `<span style="color: var(--success-color); font-weight: 500; font-size: 0.9rem;">✓ Gespeichert</span>` : ''}
-                                <a href="/flats" data-link class="btn btn-secondary">${this.t('cancel')}</a>
-                                <button type="submit" class="btn btn-primary" ${this.state.saving ? 'disabled' : ''}>
-                                    ${this.state.saving ? this.t('saving') : this.t('save_flat')}
-                                </button>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                                <div>
+                                    ${this.isEdit ? `<button type="button" class="btn btn-danger" id="deleteFlatBtn">${this.t('delete')}</button>` : ''}
+                                </div>
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    ${this.state.saved ? `<span style="color: var(--success-color); font-weight: 500; font-size: 0.9rem;">✓ Gespeichert</span>` : ''}
+                                    <a href="/flats" data-link class="btn btn-secondary">${this.t('cancel')}</a>
+                                    <button type="submit" class="btn btn-primary" ${this.state.saving ? 'disabled' : ''}>
+                                        ${this.state.saving ? this.t('saving') : this.t('save_flat')}
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>

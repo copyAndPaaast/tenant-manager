@@ -100,6 +100,39 @@ export default class TenantForm extends Component {
                 new FileAttachments('tenant', this.tenantId).mount(fileContainer);
             }
 
+            document.getElementById('archiveTenantBtn')?.addEventListener('click', async () => {
+                if(!confirm('Mieter wirklich archivieren?')) return;
+                try {
+                    await fetch(`/api/tenants/${this.tenantId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({...this.state.tenant, is_archived: 1})
+                    });
+                    this.setState({ loading: true });
+                    this.postRender();
+                } catch (e) { alert(e.message); }
+            });
+
+            document.getElementById('unarchiveTenantBtn')?.addEventListener('click', async () => {
+                try {
+                    await fetch(`/api/tenants/${this.tenantId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({...this.state.tenant, is_archived: 0})
+                    });
+                    this.setState({ loading: true });
+                    this.postRender();
+                } catch (e) { alert(e.message); }
+            });
+
+            document.getElementById('deleteTenantBtn')?.addEventListener('click', async () => {
+                if(!confirm('Mieter wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) return;
+                try {
+                    await fetch(`/api/tenants/${this.tenantId}`, { method: 'DELETE' });
+                    window.location.href = '/tenants';
+                } catch (e) { alert(e.message); }
+            });
+
             return;
         }
 
@@ -376,7 +409,7 @@ export default class TenantForm extends Component {
         }
 
         const rentHistorySection = this.isEdit ? `
-            <div class="card" style="margin-top: 24px; max-width: 800px; padding: 0; overflow: hidden;">
+            <div class="card" style="margin-top: 24px; padding: 0; overflow: hidden;">
                 <div style="padding: 24px; border-bottom: 1px solid var(--border-color);">
                     <h2 style="font-size: 1.25rem; font-weight: 600;">${this.t('rent_history')}</h2>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">${this.t('track_rent_changes')}</p>
@@ -395,7 +428,7 @@ export default class TenantForm extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            ${(this.state.rentHistory || []).map(r => {
+                            ${(this.state.rentHistory || []).map((r, index) => {
             const isEditing = this.state.editingRentId == r.id;
             if (isEditing) {
                 return `
@@ -419,8 +452,8 @@ export default class TenantForm extends Component {
             const total = Number(r.base_rent) + Number(r.heating) + Number(r.maintenance);
             return `
                                 <tr>
-                                    <td>${r.date_from}</td>
-                                    <td>${r.date_to ? r.date_to : `<span style="color: var(--success-color); font-weight: 600; font-size: 0.8rem;">Aktuell</span>`}</td>
+                                    <td>${this.fDate(r.date_from)}</td>
+                                    <td>${r.date_to ? this.fDate(r.date_to) : (index === 0 ? `<span style="color: var(--success-color); font-weight: 600; font-size: 0.8rem;">Aktuell</span>` : '-')}</td>
                                     <td>€${Number(r.base_rent).toFixed(2)}</td>
                                     <td>€${Number(r.heating).toFixed(2)}</td>
                                     <td>€${Number(r.maintenance).toFixed(2)}</td>
@@ -465,7 +498,7 @@ export default class TenantForm extends Component {
         ` : '';
 
         const leasesSection = this.isEdit ? `
-            <div class="card" style="margin-top: 24px; max-width: 800px; padding: 0; overflow: hidden;">
+            <div class="card" style="margin-top: 24px; padding: 0; overflow: hidden;">
                 <div style="padding: 24px; border-bottom: 1px solid var(--border-color);">
                     <h2 style="font-size: 1.25rem; font-weight: 600;">${this.t('leases_flats')}</h2>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;">${this.t('flats_associated')}</p>
@@ -481,7 +514,7 @@ export default class TenantForm extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            ${(this.state.leases || []).map(l => {
+                            ${(this.state.leases || []).map((l, index) => {
             const isEditing = this.state.editingLeaseId == l.id;
             if (isEditing) {
                 return `
@@ -503,8 +536,8 @@ export default class TenantForm extends Component {
             return `
                                 <tr>
                                     <td><strong>${this.state.flatsMap[l.flat_id] || this.t('unknown')}</strong></td>
-                                    <td>${l.move_in_date || '-'}</td>
-                                    <td>${l.move_out_date ? `<span style="color: var(--text-secondary);">${l.move_out_date}</span>` : `<span style="color: var(--success-color); font-weight: 600;">${this.t('current_tenant')}</span>`}</td>
+                                    <td>${l.move_in_date ? this.fDate(l.move_in_date) : '-'}</td>
+                                    <td>${l.move_out_date ? `<span style="color: var(--text-secondary);">${this.fDate(l.move_out_date)}</span>` : (index === 0 ? `<span style="color: var(--success-color); font-weight: 600;">${this.t('current_tenant')}</span>` : '-')}</td>
                                     <td style="text-align: right; white-space: nowrap;">
                                         <button class="btn btn-sm btn-action edit-lease-btn" data-id="${l.id}" style="margin-right: 4px;">${this.t('edit')}</button>
                                         <button class="btn btn-sm btn-danger delete-lease-btn" data-id="${l.id}">${this.t('delete')}</button>
@@ -540,7 +573,7 @@ export default class TenantForm extends Component {
         ` : '';
 
         const protocolsSection = this.isEdit ? `
-            <div class="card" style="margin-top: 24px; max-width: 800px; padding: 0; overflow: hidden;">
+            <div class="card" style="margin-top: 24px; padding: 0; overflow: hidden;">
                 <div style="padding: 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <h2 style="font-size: 1.25rem; font-weight: 600;">${this.t('protocols')}</h2>
@@ -573,7 +606,7 @@ export default class TenantForm extends Component {
             }
             return `
                                 <tr>
-                                    <td style="white-space: nowrap; vertical-align: top;">${p.date}</td>
+                                    <td style="white-space: nowrap; vertical-align: top;">${this.fDate(p.date)}</td>
                                     <td>${p.information}</td>
                                     <td style="text-align: right; vertical-align: top; white-space: nowrap;">
                                         <button class="btn btn-sm btn-action edit-protocol-btn" data-id="${p.id}" style="margin-right: 4px;">${this.t('edit')}</button>
@@ -628,7 +661,7 @@ export default class TenantForm extends Component {
                     `).join('')}
                 </div>
 
-                <div style="max-width: 800px;">
+                <div>
                     ${this.state.error ? `<div style="padding: 12px; margin-bottom: 20px; background: rgba(239, 68, 68, 0.1); color: var(--error-color); border-radius: var(--border-radius-sm);">${this.state.error}</div>` : ''}
                     
                     <form id="tenantForm">
@@ -712,12 +745,23 @@ export default class TenantForm extends Component {
 
                         ${this.isEdit ? `<div id="tenant-file-attachments"></div>` : ''}
 
-                        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; align-items: center;">
-                            ${this.state.saved ? `<span style="color: var(--success-color); font-weight: 500; font-size: 0.9rem;">✓ Gespeichert</span>` : ''}
-                            <a href="/tenants" data-link class="btn btn-secondary">${this.t('cancel')}</a>
-                            <button type="submit" class="btn btn-primary" ${this.state.saving ? 'disabled' : ''}>
-                                ${this.state.saving ? this.t('saving') : this.t('save_tenant')}
-                            </button>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                            <div style="display: flex; gap: 12px;">
+                                ${this.isEdit ? `
+                                    ${!this.state.tenant.is_archived ? 
+                                        `<button type="button" class="btn btn-secondary" id="archiveTenantBtn">Archivieren</button>` : 
+                                        `<button type="button" class="btn btn-secondary" id="unarchiveTenantBtn" style="color: var(--primary-color); border-color: var(--primary-color);">Wiederherstellen</button>
+                                         <button type="button" class="btn btn-danger" id="deleteTenantBtn">Löschen</button>`
+                                    }
+                                ` : ''}
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                ${this.state.saved ? `<span style="color: var(--success-color); font-weight: 500; font-size: 0.9rem;">✓ Gespeichert</span>` : ''}
+                                <a href="/tenants" data-link class="btn btn-secondary">${this.t('cancel')}</a>
+                                <button type="submit" class="btn btn-primary" ${this.state.saving ? 'disabled' : ''}>
+                                    ${this.state.saving ? this.t('saving') : this.t('save_tenant')}
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
