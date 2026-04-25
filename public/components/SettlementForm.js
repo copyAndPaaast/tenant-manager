@@ -568,7 +568,7 @@ export default class SettlementForm extends Component {
                     </div>
                 </header>
 
-                <div class="card" style="max-width: 800px; margin-bottom: 24px;">
+                <div class="card" style="margin-bottom: 24px;">
                     ${this.state.error ? `<div style="padding: 12px; margin-bottom: 20px; background: rgba(239, 68, 68, 0.1); color: var(--error-color); border-radius: var(--border-radius-sm);">${this.state.error}</div>` : ''}
 
                     <form id="settlementForm">
@@ -645,30 +645,40 @@ export default class SettlementForm extends Component {
                 </div>
 
                 <!-- Per-flat calculation panel -->
-                <div class="card" style="max-width: 800px; padding: 0;">
+                <div class="card" style="padding: 0; overflow: hidden;">
                     <div style="padding: 16px 24px; border-bottom: 1px solid var(--border-color); background: rgba(241, 245, 249, 0.5);">
                         <h3 style="font-weight: 600; margin-bottom: 4px;">Mieter-Abrechnungen</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Anteilige Kostenverteilung, Heizkosten und Vorauszahlungen pro Wohnung.</p>
                     </div>
 
-                    <div style="display: flex; overflow-x: auto; border-bottom: 1px solid var(--border-color);">
-                        ${this.state.flats.map((flat, idx) => `
-                            <button class="flat-tab-btn" data-index="${idx}" style="padding: 12px 24px; background: ${this.state.activeTab === idx ? 'var(--surface-color)' : 'transparent'}; border: none; border-bottom: 2px solid ${this.state.activeTab === idx ? 'var(--primary-color)' : 'transparent'}; cursor: pointer; font-weight: ${this.state.activeTab === idx ? '600' : '400'}; color: ${this.state.activeTab === idx ? 'var(--text-primary)' : 'var(--text-secondary)'}; white-space: nowrap;">
-                                ${flat.name_number}
-                            </button>
-                        `).join('')}
-                    </div>
+                    <div style="display: flex; min-height: 400px;">
+                        <!-- Vertical tenant list -->
+                        <div style="width: 220px; flex-shrink: 0; border-right: 1px solid var(--border-color); background: rgba(248, 250, 252, 0.6);">
+                            ${this.state.flats.map((flat, idx) => {
+                                const data = this.state.flatData?.[flat.id];
+                                const activeLease = data?.leases?.find(l => !l.move_out_date) || data?.leases?.[0];
+                                const tenant = activeLease ? data.tenants?.[activeLease.tenant_id] : null;
+                                const label = tenant ? `${tenant.first_name} ${tenant.last_name}` : flat.name_number;
+                                const isActive = this.state.activeTab === idx;
+                                return `
+                                <button class="flat-tab-btn" data-index="${idx}" style="display: block; width: 100%; text-align: left; padding: 14px 20px; background: ${isActive ? 'white' : 'transparent'}; border: none; border-right: 3px solid ${isActive ? 'var(--primary-color)' : 'transparent'}; border-bottom: 1px solid var(--border-color); cursor: pointer; font-weight: ${isActive ? '600' : '400'}; color: ${isActive ? 'var(--text-primary)' : 'var(--text-secondary)'}; font-size: 0.9rem; transition: background 0.15s;">
+                                    ${label}
+                                </button>`;
+                            }).join('')}
+                        </div>
 
-                    <div style="padding: 24px;">
-                        ${this.state.flats.length > 0 && activeFlat ? `
-                            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
-                                <h4 style="font-size: 1.05rem; font-weight: 600;">${activeFlat.name_number}</h4>
-                                ${activeFlat.square_meters ? `<span style="font-size: 0.9rem; color: var(--text-secondary);">${activeFlat.square_meters} m²</span>` : ''}
-                            </div>
-                            ${this.renderFlatTab(activeFlat)}
-                        ` : `
-                            <p style="color: var(--text-secondary);">Keine Wohnungen in diesem Gebäude gefunden.</p>
-                        `}
+                        <!-- Content panel -->
+                        <div style="flex: 1; padding: 24px; min-width: 0;">
+                            ${this.state.flats.length > 0 && activeFlat ? `
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+                                    <h4 style="font-size: 1.05rem; font-weight: 600;">${activeFlat.name_number}</h4>
+                                    ${activeFlat.square_meters ? `<span style="font-size: 0.9rem; color: var(--text-secondary);">${activeFlat.square_meters} m²</span>` : ''}
+                                </div>
+                                ${this.renderFlatTab(activeFlat)}
+                            ` : `
+                                <p style="color: var(--text-secondary);">Keine Wohnungen in diesem Gebäude gefunden.</p>
+                            `}
+                        </div>
                     </div>
                 </div>
             </div>
