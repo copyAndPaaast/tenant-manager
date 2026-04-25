@@ -543,7 +543,11 @@ export default class SettlementForm extends Component {
                 this.settlementId = data.id || data.data?.id;
                 window.history.replaceState(null, null, `/buildings/${this.buildingId}/settlements/${this.settlementId}/edit`);
             }
-            this.setState({ saving: false, saved: true });
+            this.setState({
+                saving: false,
+                saved: true,
+                settlement: { ...this.state.settlement, year, date, status, expenses }
+            });
             setTimeout(() => this.setState({ saved: false }), 2500);
         } catch (err) {
             this.setState({ saving: false, error: err.message });
