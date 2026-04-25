@@ -211,16 +211,16 @@ export default class SettlementForm extends Component {
         const heatingInputBlock = `
             <div class="form-group" style="max-width: 320px; margin-bottom: 24px;">
                 <label for="heating_bill_${flat.id}">Heizkostenabrechnung (Heizölgesellschaft)</label>
-                <div style="position: relative;">
+                <div style="display: flex; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); overflow: hidden;">
                     <input
                         type="number" step="0.01"
                         id="heating_bill_${flat.id}"
-                        class="input-number heating-bill-input"
+                        class="heating-bill-input"
                         value="${heatingBillValue}"
                         placeholder="0,00"
-                        style="padding-right: 32px; width: 100%;"
+                        style="flex: 1; border: none; padding: 8px 12px; font-family: inherit; font-size: inherit; outline: none; background: transparent; text-align: right;"
                     >
-                    <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none;">€</span>
+                    <span style="padding: 8px 12px; background: var(--surface-color); border-left: 1px solid var(--border-color); color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; user-select: none;">€</span>
                 </div>
                 <small style="color: var(--text-secondary);">Wert aus der Heizkostenabrechnung des Versorgers. Wird beim Speichern übernommen.</small>
             </div>`;
@@ -572,18 +572,18 @@ export default class SettlementForm extends Component {
                     ${this.state.error ? `<div style="padding: 12px; margin-bottom: 20px; background: rgba(239, 68, 68, 0.1); color: var(--error-color); border-radius: var(--border-radius-sm);">${this.state.error}</div>` : ''}
 
                     <form id="settlementForm">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
-                            <div class="form-group">
-                                <label for="year">Abrechnungsjahr</label>
-                                <input type="number" id="year" class="input-number" required value="${this.state.settlement.year}" ${this.state.saving ? 'disabled' : ''}>
+                        <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: flex-start;">
+                            <div>
+                                <label for="year" style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px;">Abrechnungsjahr</label>
+                                <input type="number" id="year" required value="${this.state.settlement.year}" ${this.state.saving ? 'disabled' : ''} style="width: 110px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-family: inherit; font-size: inherit;">
                             </div>
-                            <div class="form-group">
-                                <label for="date">Erstellungsdatum</label>
-                                <input type="date" id="date" class="input-short" required value="${this.state.settlement.date}" ${this.state.saving ? 'disabled' : ''}>
+                            <div>
+                                <label for="date" style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px;">Erstellungsdatum</label>
+                                <input type="date" id="date" required value="${this.state.settlement.date}" ${this.state.saving ? 'disabled' : ''} style="width: 155px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-family: inherit; font-size: inherit;">
                             </div>
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <select id="status" class="input-short" ${this.state.saving ? 'disabled' : ''}>
+                            <div>
+                                <label for="status" style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px;">Status</label>
+                                <select id="status" ${this.state.saving ? 'disabled' : ''} style="width: 140px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-family: inherit; font-size: inherit; background: white;">
                                     <option value="Draft" ${this.state.settlement.status === 'Draft' ? 'selected' : ''}>Entwurf</option>
                                     <option value="Final" ${this.state.settlement.status === 'Final' ? 'selected' : ''}>Final</option>
                                 </select>
@@ -597,15 +597,13 @@ export default class SettlementForm extends Component {
 
                         <div id="expenses-container">
                             ${this.state.settlement.expenses.map((exp, idx) => `
-                                <div class="expense-row form-row" style="align-items: center; margin-bottom: 12px; flex-wrap: nowrap;">
-                                    <div class="form-group" style="flex: 2; margin-bottom: 0;">
-                                        <input type="text" class="input-long exp-desc" placeholder="z.B. Müllabfuhr, Grundsteuer" value="${exp.description}" required>
+                                <div class="expense-row" style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+                                    <input type="text" class="exp-desc" placeholder="z.B. Müllabfuhr, Grundsteuer" value="${exp.description}" required style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-family: inherit; font-size: inherit;">
+                                    <div style="display: flex; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); overflow: hidden; flex-shrink: 0;">
+                                        <input type="number" step="0.01" class="exp-amt" placeholder="0.00" value="${exp.amount}" required style="width: 130px; border: none; padding: 8px 12px; font-family: inherit; font-size: inherit; outline: none; background: transparent; text-align: right;">
+                                        <span style="padding: 8px 12px; background: var(--surface-color); border-left: 1px solid var(--border-color); color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; user-select: none;">€</span>
                                     </div>
-                                    <div class="form-group" style="flex: 1; margin-bottom: 0; position: relative;">
-                                        <input type="number" step="0.01" class="input-number exp-amt" placeholder="0.00" value="${exp.amount}" required style="padding-right: 32px; width: 100%;">
-                                        <span style="position: absolute; right: 12px; top: 10px; color: var(--text-secondary);">€</span>
-                                    </div>
-                                    <button type="button" class="btn btn-action remove-row-btn" data-index="${idx}" style="color: var(--error-color); margin-bottom: 0;">&times;</button>
+                                    <button type="button" class="btn btn-action remove-row-btn" data-index="${idx}" style="color: var(--error-color); flex-shrink: 0;">&times;</button>
                                 </div>
                             `).join('')}
                         </div>
